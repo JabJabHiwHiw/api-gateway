@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "food-service/proto";
+
+service MenuService {
+    rpc GetMenus(Empty) returns (MenusResponse) {}
+    rpc GetMenuItem(MenuItemRequest) returns (MenuItemResponse) {}
+    rpc CreateMenuItem(MenuItem) returns (MenuItemResponse) {}
+    rpc UpdateMenuItem(MenuItem) returns (MenuItemResponse) {}
+    rpc DeleteMenuItem(MenuItemRequest) returns (Empty) {}
+    rpc SearchMenus(MenuSearchRequest) returns (MenusResponse) {}
+}
+
+message Empty {}
+
+message MenuIngredient {
+    string id = 1;
+    string name = 2;
+    string required_quantity = 3;
+    string ingredient_id = 4;
+}
+
+message MenuIngredients {
+    repeated MenuIngredient ingredients= 1;
+}
+
+message MenuSearchRequest {
+    string name = 1;
+    string category = 2;
+    string ingredients = 3;
+}
+
+message MenuStep {
+    uint32 step_no = 1;
+    string step = 2;
+}
+
+message MenuItem {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    repeated MenuIngredient ingredients = 4;
+    string category = 5;
+    uint32 servings = 6;
+    string created_by = 7;
+    string image_url = 8;
+    repeated MenuStep steps = 9;
+}
+
+message MenuItemResponse {
+    MenuItem item = 1;
+    string error = 2;
+}
+
+message MenusResponse {
+    repeated MenuItem menus = 1;
+    string error = 2;
+}
+
+message MenuItemRequest {
+    string id = 1;
+}
+
