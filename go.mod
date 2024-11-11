@@ -5,6 +5,13 @@ go 1.23.2
 require google.golang.org/grpc v1.67.1
 
 require (
+	github.com/go-jose/go-jose/v3 v3.0.3 // indirect
+	golang.org/x/crypto v0.26.0 // indirect
+)
+
+require (
+	github.com/clerk/clerk-sdk-go/v2 v2.1.1
+	github.com/clerkinc/clerk-sdk-go v1.49.1
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
 	golang.org/x/text v0.17.0 // indirect

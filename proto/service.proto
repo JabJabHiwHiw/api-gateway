@@ -4,6 +4,8 @@ package proto;
 
 option go_package = "food-service/proto";
 
+import "google/protobuf/timestamp.proto"; 
+
 service MenuService {
     rpc GetMenus(Empty) returns (MenusResponse) {}
     rpc GetMenuItem(MenuItemRequest) returns (MenuItemResponse) {}
@@ -27,10 +29,9 @@ message MenuIngredients {
 }
 
 message MenuSearchRequest {
-    string name = 1;
-    string category = 2;
-    string ingredients = 3;
+    string search_term = 1;
 }
+
 
 message MenuStep {
     uint32 step_no = 1;
@@ -63,3 +64,66 @@ message MenuItemRequest {
     string id = 1;
 }
 
+
+service FridgeItemService {
+    rpc GetFridge(FridgeRequest) returns (FridgeItemsResponse) {}
+    rpc GetFridgeItem(FridgeItemRequest) returns (FridgeItemResponse) {}
+    rpc GetExpiredItems(FridgeRequest) returns (FridgeItemsResponse) {}
+    rpc AddItem(FridgeItem) returns (FridgeItemResponse) {}
+    rpc UpdateItem(FridgeItem) returns (FridgeItemResponse) {}
+    rpc RemoveItem(FridgeItemRequest) returns (Empty) {}
+}
+
+message FridgeItem {
+    string id = 1;
+    string user_id = 2;
+    string ingredient_id = 3;              
+    string quantity = 4;                     
+    google.protobuf.Timestamp added_date = 5; 
+    google.protobuf.Timestamp expired_date = 6;
+}
+
+message FridgeRequest {
+    string user_id = 1; 
+}
+
+message FridgeItemRequest {
+    string id = 1; 
+}
+
+message FridgeItemsResponse {
+    repeated FridgeItem items = 1; 
+    string error = 2;
+}
+
+message FridgeItemResponse {
+    FridgeItem item = 1; 
+    string error = 2;
+}
+
+
+service IngredientService {
+    rpc GetIngredientItem(IngredientItemRequest) returns (IngredientItemResponse) {}
+    rpc GetIngredients(Empty) returns (IngredientsResponse) {}
+    rpc AddIngredient(IngredientItem) returns (IngredientItemResponse) {}
+}
+
+message IngredientItem {
+    string id = 1;
+    string name = 2;
+    string category = 3;
+}
+
+message IngredientItemRequest {
+    string id = 1;
+}
+
+message IngredientItemResponse {
+    IngredientItem ingredient = 1;
+    string error = 2;
+}
+
+message IngredientsResponse {
+    repeated IngredientItem ingredients = 1;
+    string error = 2;
+}
